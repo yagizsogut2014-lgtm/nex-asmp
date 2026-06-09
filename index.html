@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXİA SMP | Sınır Tanımayan Macera</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=JetBrains+Mono:wght@500&display=swap');
+        
+        :root { 
+            --accent: #00d2ff; 
+            --accent-dark: #3a7bd5;
+            --bg: #06080c; 
+        }
+
+        body { 
+            background: var(--bg);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(0, 210, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(58, 123, 213, 0.08) 0%, transparent 40%);
+            color: #f8fafc; 
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        #preloader {
+            position: fixed; inset: 0; background: #06080c; z-index: 99999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.8s ease;
+        }
+        .loader-ring { 
+            width: 70px; height: 70px; border: 3px solid rgba(255,255,255,0.03); 
+            border-top: 3px solid var(--accent); border-radius: 50%;
+            animation: spin 0.8s infinite linear; 
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .glass { 
+            background: rgba(255, 255, 255, 0.02); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        
+        .marquee-wrapper { 
+            background: linear-gradient(90deg, #1e3a8a, #0ea5e9);
+            color: #fff; font-weight: 800; font-size: 11px; padding: 10px 0; overflow: hidden;
+        }
+        .marquee-content { display: inline-block; white-space: nowrap; animation: marquee 30s linear infinite; }
+        @keyframes marquee { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+
+        .nav-btn {
+            padding: 10px 22px; border-radius: 14px; font-weight: 700; font-size: 13px;
+            transition: 0.3s; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+        .nav-btn:hover { color: var(--accent); background: rgba(0, 210, 255, 0.06); }
+        .nav-btn.active { 
+            color: #fff; background: rgba(255,255,255,0.04); 
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.05);
+        }
+
+        #announcementModal {
+            display: none;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100001;
+            align-items: center; justify-content: center; backdrop-filter: blur(8px);
+        }
+        #announcementModal.active { display: flex; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .page-content { display: none; }
+        .page-content.active { display: block; animation: pageIn 0.5s ease-out; }
+        @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .ip-display {
+            background: #000; font-family: 'JetBrains Mono', monospace;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+        }
+
+        .toast {
+            position: fixed; top: 40px; left: 50%; transform: translate(-50%, -250%);
+            background: #fff; color: #000; padding: 14px 30px; border-radius: 12px;
+            font-weight: 900; z-index: 100000; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .card-hover:hover { transform: translateY(-8px); border-color: var(--accent); }
+    </style>
+</head>
+<body onload="removeLoader()">
+
+<div id="preloader">
+    <div class="loader-ring"></div>
+    <p class="mt-5 text-[10px] font-black tracking-[0.5em] text-blue-400 uppercase">NEXİA SMP</p>
+</div>
+
+<div id="announcementModal" onclick="closeAnnouncement()">
+    <div class="relative max-w-2xl w-full p-4" onclick="event.stopPropagation()">
+        <button onclick="closeAnnouncement()" class="absolute -top-10 right-4 text-white text-3xl hover:text-blue-400 transition">&times;</button>
+        <img src="dur.png" alt="Duyuru" class="w-full rounded-3xl shadow-2xl border border-white/10">
+    </div>
+</div>
+
+<div class="marquee-wrapper">
+    <div class="marquee-content">
+        💎 NEXİA SMP • TÜM SÜRÜMLER AKTİF (1.16.5 - 1.21.X) • ⚔️ SURVIVAL SEZONU BAŞLADI • 🏆 ÖDÜLLÜ ETKİNLİKLER HER AKŞAM 20:00'DE • NexiaSMP.aternos.me • 
+    </div>
+</div>
+
+<div id="mainToast" class="toast italic">BAŞARIYLA KOPYALANDI! ⚡</div>
+
+<header class="container mx-auto py-8 px-6 flex flex-col md:flex-row justify-between items-center gap-6" data-aos="fade-down">
+    <div class="text-center md:text-left">
+        <h1 class="text-4xl font-black tracking-tighter italic text-white group cursor-pointer" onclick="location.hash='home'">
+            NEXİA<span class="text-blue-500 group-hover:animate-pulse">.</span>
+        </h1>
+        <div class="flex items-center gap-2 mt-1 justify-center md:justify-start">
+            <span class="h-[2px] w-4 bg-blue-500"></span>
+            <p class="text-[9px] text-slate-500 font-black uppercase tracking-[0.3em]">Premium Survival</p>
+        </div>
+    </div>
+
+    <div class="flex items-center gap-4">
+        <div onclick="copyIP()" class="ip-display px-6 py-3 rounded-2xl cursor-pointer hover:border-blue-500 transition-all group relative overflow-hidden">
+            <span class="block text-[8px] text-slate-500 font-black mb-1 uppercase tracking-widest">Tıkla ve Kopyala</span>
+            <span class="text-blue-400 font-bold group-hover:text-white transition relative z-10">NexiaSMP.aternos.me</span>
+        </div>
+        
+        <a href="https://discord.gg/2r52yp4GPp" target="_blank" class="glass w-14 h-14 flex items-center justify-center rounded-2xl hover:text-blue-400 transition-all group">
+            <i class="fa-brands fa-discord text-2xl group-hover:scale-110 transition"></i>
+        </a>
+    </div>
+</header>
+
+<nav class="container mx-auto px-4 mb-16" data-aos="fade-up">
+    <div class="glass max-w-fit mx-auto rounded-2xl p-2 flex flex-wrap justify-center gap-1">
+        <a href="#home" class="nav-btn" id="nav-home"><i class="fa-solid fa-bolt mr-1"></i> Anasayfa</a>
+        <a href="#apply" class="nav-btn" id="nav-apply"><i class="fa-solid fa-clipboard-list mr-1"></i> Başvuru</a>
+        <div onclick="openAnnouncement()" class="nav-btn text-amber-400" id="nav-announcement"><i class="fa-solid fa-bullhorn mr-1"></i> Duyuru</div>
+        <a href="#rules" class="nav-btn" id="nav-rules"><i class="fa-solid fa-gavel mr-1"></i> Kurallar</a>
+        <a href="#team" class="nav-btn" id="nav-team"><i class="fa-solid fa-shield-cat mr-1"></i> Ekip</a>
+    </div>
+</nav>
+
+<main class="container mx-auto px-6">
+    
+    <section id="home" class="page-content active">
+        <div class="grid lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-8">
+                <div class="glass rounded-[3rem] p-12 relative overflow-hidden group min-h-[450px] flex flex-col justify-center">
+                    <div class="relative z-10">
+                        <div class="inline-block bg-blue-500/10 text-blue-400 px-4 py-1 rounded-lg text-[10px] font-black mb-6 border border-blue-500/20">
+                            YENİ NESİL ALTYAPI
+                        </div>
+                        <h2 class="text-7xl font-black italic mb-6 leading-[0.9] tracking-tighter uppercase">
+                            HER SÜRÜM <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">TEK DÜNYA.</span>
+                        </h2>
+                        <p class="text-slate-400 text-lg mb-10 max-w-lg font-medium">
+                            NEXİA SMP, 1.16.5'ten 1.21.10'e kadar tüm sürümleri destekler. Arkadaşlarınla sürüm farkı olmaksızın en güncel Survival deneyimini yaşa.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-5">
+                            <button onclick="copyIP()" class="bg-blue-600 hover:bg-white hover:text-blue-600 text-white px-12 py-5 rounded-2xl font-black uppercase italic transition-all shadow-xl shadow-blue-600/20 transform hover:-translate-y-1">Hemen Katıl</button>
+                            <div class="glass px-8 py-5 rounded-2xl flex flex-col justify-center">
+                                <p class="text-[9px] text-slate-500 font-black leading-none uppercase mb-1">Anlık Oyuncu</p>
+                                <p id="mc-count-text" class="text-lg font-black text-white italic">YÜKLENİYOR...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-dragon absolute -bottom-10 -right-10 text-[20rem] text-white/[0.02] -rotate-12 pointer-events-none"></i>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4 space-y-6">
+                <div class="glass p-10 rounded-[2.5rem] card-hover transition-all">
+                    <h3 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-8 italic">Sunucu İstatistikleri</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white/5 p-5 rounded-2xl">
+                            <span class="block text-[9px] text-blue-400 font-bold mb-1 uppercase">Sürümler</span>
+                            <span class="text-lg font-black italic">1.16 - 1.21</span>
+                        </div>
+                        <div class="bg-white/5 p-5 rounded-2xl">
+                            <span class="block text-[9px] text-green-400 font-bold mb-1 uppercase">Gecikme</span>
+                            <span class="text-lg font-black italic">~20ms</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass p-10 rounded-[2.5rem] card-hover border-t-4 border-indigo-500">
+                    <h3 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-6 italic">Discord Durumu</h3>
+                    <div class="flex items-end gap-3">
+                        <span id="real-discord-members" class="text-5xl font-black text-indigo-400 italic">0</span>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase mb-2">Aktif Üye<br>Toplulukta</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="apply" class="page-content">
+        <div class="text-center mb-16">
+            <h2 class="text-5xl font-black italic uppercase tracking-tighter">EKİBE <span class="text-blue-500">KATIL</span></h2>
+            <p class="text-slate-500 text-sm mt-3 font-bold uppercase tracking-[0.3em]">NEXİA'nın Bir Parçası Olmaya Hazır Mısın?</p>
+        </div>
+        
+        <div class="max-w-3xl mx-auto">
+            <div class="glass p-12 rounded-[3rem] text-center border-t-4 border-blue-500">
+                <i class="fa-solid fa-user-plus text-6xl text-blue-500 mb-8 block"></i>
+                <h4 class="text-3xl font-black italic mb-6 uppercase tracking-tighter">Yetkili Başvuruları</h4>
+                <p class="text-slate-400 mb-10 font-medium leading-relaxed">
+                    NEXİA SMP bünyesinde rehber, moderatör veya geliştirici olarak görev almak istiyorsan, başvuru formumuzu doldurman yeterli. Tüm başvurular ekibimiz tarafından detaylıca incelenir.
+                </p>
+                <a href="https://discord.gg/2r52yp4GPp" target="_blank" class="inline-block bg-blue-600 hover:bg-white hover:text-blue-600 text-white px-12 py-5 rounded-2xl font-black uppercase italic transition-all shadow-xl shadow-blue-600/20">
+                    Başvuru Formuna Git
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="rules" class="page-content">
+        <div class="text-center mb-16">
+            <h2 class="text-5xl font-black italic uppercase tracking-tighter">SUNUCU <span class="text-blue-500">YASALARI</span></h2>
+            <p class="text-slate-500 text-sm mt-3 font-bold uppercase tracking-[0.3em]">Adil Oyun Her Şeyden Önemlidir</p>
+        </div>
+        <div class="max-w-4xl mx-auto grid gap-4">
+            <div class="glass p-8 rounded-3xl border-l-4 border-blue-500 flex gap-8 items-center hover:bg-blue-500/5 transition">
+                <span class="text-5xl font-black text-blue-500 opacity-20 italic">01</span>
+                <div>
+                    <h4 class="font-black italic text-lg uppercase text-blue-400">Üslup ve Saygı</h4>
+                    <p class="text-slate-400 text-sm mt-1">Küfür, argo, siyaset ve her türlü ayrımcı söylem yasaktır. Topluluk huzurunu bozmak ceza sebebidir.</p>
+                </div>
+            </div>
+            <div class="glass p-8 rounded-3xl border-l-4 border-red-600 flex gap-8 items-center hover:bg-red-600/5 transition">
+                <span class="text-5xl font-black text-red-600 opacity-20 italic">02</span>
+                <div>
+                    <h4 class="font-black italic text-lg uppercase text-red-500">Hile ve Yazılım</h4>
+                    <p class="text-slate-400 text-sm mt-1">KillAura, Fly, X-Ray ve oyun dengesini bozan her türlü makro/yazılım süresiz uzaklaştırma ile sonuçlanır.</p>
+                </div>
+            </div>
+            <div class="glass p-8 rounded-3xl border-l-4 border-emerald-500 flex gap-8 items-center hover:bg-emerald-500/5 transition">
+                <span class="text-5xl font-black text-emerald-500 opacity-20 italic">03</span>
+                <div>
+                    <h4 class="font-black italic text-lg uppercase text-emerald-400">Reklam ve Spam</h4>
+                    <p class="text-slate-400 text-sm mt-1">Başka sunucuların reklamını yapmak veya global sohbette gereksiz kirlilik oluşturmak yasaktır.</p>
+                </div>
+            </div>
+            <div class="glass p-8 rounded-3xl border-l-4 border-amber-500 flex gap-8 items-center hover:bg-amber-500/5 transition">
+                <span class="text-5xl font-black text-amber-500 opacity-20 italic">04</span>
+                <div>
+                    <h4 class="font-black italic text-lg uppercase text-amber-400">Dolandırıcılık</h4>
+                    <p class="text-slate-400 text-sm mt-1">Oyuncuları oyun içi ticaret vaadiyle kandırmak veya eşyalarını çalmak ağır cezalar gerektirir.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="page-content">
+        <h2 class="text-4xl font-black italic mb-20 text-center uppercase tracking-tighter italic">YÖNETİM <span class="text-blue-500">EKİBİ</span></h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            <div class="glass p-10 rounded-[3rem] text-center card-hover transition-all">
+                <div class="relative w-28 h-28 mx-auto mb-6">
+                    <img src="https://minotar.net/cube/Steve/100" class="rounded-3xl relative z-10 shadow-2xl">
+                    <div class="absolute inset-0 bg-red-500 blur-3xl opacity-20"></div>
+                </div>
+                <span class="text-[10px] font-black text-red-500 uppercase tracking-widest block mb-2">Kurucu</span>
+                <h4 class="text-2xl font-black italic italic uppercase tracking-tighter">NEXİADev</h4>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="mt-40 py-20 border-t border-white/5 bg-black/50">
+    <div class="container mx-auto px-10 flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
+        <div>
+            <h2 class="text-3xl font-black italic text-white tracking-tighter">NEXİA<span class="text-blue-500">.</span></h2>
+            <p class="text-slate-600 text-[10px] font-bold uppercase tracking-[0.5em] mt-2">© 2026 NEXİA SMP • TÜM HAKLARI SAKLIDIR.</p>
+        </div>
+        <div class="flex gap-8">
+            <a href="https://discord.gg/2r52yp4GPp" target="_blank" class="text-slate-500 hover:text-indigo-400 text-5xl transition-all">
+                <i class="fa-brands fa-discord"></i>
+            </a>
+        </div>
+    </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1000, once: true });
+
+    const serverIP = "NexiaSMP.aternos.me";
+
+    function removeLoader() {
+        const loader = document.getElementById('preloader');
+        setTimeout(() => {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', 800);
+        }, 800);
+    }
+
+    function openAnnouncement() {
+        document.getElementById('announcementModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeAnnouncement() {
+        document.getElementById('announcementModal').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    function router() {
+        const hash = window.location.hash.replace('#', '') || 'home';
+        closeAnnouncement();
+        document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+
+        const targetPage = document.getElementById(hash);
+        const targetBtn = document.getElementById('nav-' + hash);
+
+        if (targetPage) targetPage.classList.add('active');
+        if (targetBtn) targetBtn.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.addEventListener('hashchange', router);
+    window.addEventListener('load', router);
+
+    async function fetchStats() {
+        const DISCORD_ID = "1453053783847206925";
+        try {
+            const mc = await fetch(`https://api.mcstatus.io/v2/status/java/${serverIP}`);
+            const mcData = await mc.json();
+            document.getElementById('mc-count-text').innerText = mcData.online ? 
+                `${mcData.players.online} / ${mcData.players.max}` : "SUNUCU KAPALI";
+
+            const ds = await fetch(`https://discord.com/api/guilds/${DISCORD_ID}/widget.json`);
+            const dsData = await ds.json();
+            document.getElementById('real-discord-members').innerText = dsData.presence_count || "0";
+        } catch(e) { 
+            console.error("Veri hatası.");
+        }
+    }
+
+    fetchStats();
+    setInterval(fetchStats, 60000);
+
+    function toast(msg) {
+        const t = document.getElementById('mainToast');
+        t.innerText = msg;
+        t.style.transform = 'translate(-50%, 0)';
+        setTimeout(() => t.style.transform = 'translate(-50%, -250%)', 3000);
+    }
+
+    function copyIP() {
+        navigator.clipboard.writeText(serverIP);
+        toast("IP KOPYALANDI! 🚀");
+    }
+</script>
+
+</body>
+</html>
