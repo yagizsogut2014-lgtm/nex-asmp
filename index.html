@@ -3,34 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAPANIŞ Modu</title>
+    <title>Site Kapandı</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #121212;
+            background-color: #0d0d0d;
+            font-family: 'Arial Black', sans-serif;
+            overflow: hidden;
             color: #ffffff;
-            font-family: Arial, sans-serif;
         }
+
+        /* Arka plan 404 yazısı */
+        .background-404 {
+            position: absolute;
+            font-size: 25vw;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.03);
+            z-index: 0;
+            user-select: none;
+        }
+
+        /* Ön plan içerik */
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
         h1 {
             font-size: 3rem;
-            margin-bottom: 10px;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 5px;
         }
-        p {
-            font-size: 1.2rem;
-            color: #888;
+
+        .dev {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: #ff4757;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
-    <h1>Kapandı</h1>
-    <p>Yapımcı: STRYKER</p>
+    <div class="background-404">404</div>
+
+    <div class="content">
+        <h1>KAPANDI</h1>
+        <div class="dev">YAPIMCI: STRYKER</div>
+    </div>
 
 </body>
 </html>
