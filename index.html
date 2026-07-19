@@ -96,17 +96,26 @@
     <p class="mt-5 text-[10px] font-black tracking-[0.5em] text-blue-400 uppercase">MüdürSMP</p>
 </div>
 
+<!-- Güncellenen ve Otomatik Açılan Duyuru Penceresi -->
 <div id="announcementModal" onclick="closeAnnouncement()">
-    <div class="relative max-w-2xl w-full p-4" onclick="event.stopPropagation()">
-        <button onclick="closeAnnouncement()" class="absolute -top-10 right-4 text-white text-3xl hover:text-blue-400 transition">&times;</button>
-        <img src="dur.png" alt="Duyuru" class="w-full rounded-3xl shadow-2xl border border-white/10">
+    <div class="relative max-w-md w-full p-4" onclick="event.stopPropagation()">
+        <div class="glass p-8 rounded-[2.5rem] text-center border-t-4 border-red-500 relative shadow-2xl">
+            <button onclick="closeAnnouncement()" class="absolute top-4 right-4 text-slate-400 text-2xl hover:text-white transition">&times;</button>
+            <i class="fa-brands fa-youtube text-red-500 text-6xl mb-4 block animate-pulse"></i>
+            <h4 class="text-2xl font-black italic mb-3 uppercase tracking-tighter text-white">YENİ VİDEO YAYINDA!</h4>
+            <p class="text-slate-300 mb-6 font-medium leading-relaxed text-sm">
+                Pazartesi Mr_mudur Kanalında Youtube Yeni Video Yayında!
+            </p>
+            <a href="https://www.youtube.com/@mudursmp" target="_blank" class="inline-block bg-red-600 hover:bg-white hover:text-red-600 text-white px-8 py-4 rounded-xl font-black uppercase italic transition-all shadow-xl shadow-red-600/20 w-full text-center">
+                <i class="fa-brands fa-youtube mr-2"></i> Youtube Kanalına Git
+            </a>
+        </div>
     </div>
 </div>
 
 <div class="marquee-wrapper">
     <div class="marquee-content">
-        💎 MüdürSMP • 26.1.2 SÜRÜMÜ • ⚔️ SURVIVAL SEZONU BAŞLADI • 🏆 ÖDÜLLÜ ETKİNLİKLER HER AKŞAM 20:00'DE • 152.228.132.11:11413
- • 
+        💎 MüdürSMP • 26.1.2 SÜRÜMÜ • ⚔️ SURVIVAL SEZONU BAŞLADI • 🏆 ÖDÜLLÜ ETKİNLİKLER HER AKŞAM 20:00'DE • 152.228.132.11:11413 • 
     </div>
 </div>
 
@@ -114,7 +123,6 @@
 
 <header class="container mx-auto py-8 px-6 flex flex-col md:flex-row justify-between items-center gap-6" data-aos="fade-down">
     <div class="text-center md:text-left">
-        <!-- Logo Alanı (h-24 olarak güncellendi) -->
         <h1 class="group cursor-pointer flex justify-center md:justify-start" onclick="location.hash='home'">
             <img src="logo.png" alt="MüdürSMP Logo" class="h-24 w-auto object-contain transition-transform group-hover:scale-105">
         </h1>
@@ -281,7 +289,7 @@
             <p class="text-slate-600 text-[10px] font-bold uppercase tracking-[0.5em] mt-2">© 2026 MüdürSMP • TÜM HAKLARI SAKLIDIR.</p>
         </div>
         <div class="flex gap-8">
-            <a href="YAKINDA" target="_blank" class="text-slate-500 hover:text-indigo-400 text-5xl transition-all">
+            <a href="https://discord.gg/2CnYjAZRk3" target="_blank" class="text-slate-500 hover:text-indigo-400 text-5xl transition-all">
                 <i class="fa-brands fa-discord"></i>
             </a>
         </div>
@@ -298,7 +306,10 @@
         const loader = document.getElementById('preloader');
         setTimeout(() => {
             loader.style.opacity = '0';
-            setTimeout(() => loader.style.display = 'none', 800);
+            setTimeout(() => {
+                loader.style.display = 'none';
+                openAnnouncement(); // Siteye giriş yapıldığında yükleme ekranından hemen sonra duyuruyu açar
+            }, 800);
         }, 800);
     }
 
@@ -314,7 +325,7 @@
 
     function router() {
         const hash = window.location.hash.replace('#', '') || 'home';
-        closeAnnouncement();
+        // Sayfa içi menü geçişlerinde duyurunun otomatik kapanmasını engellemek için closeAnnouncement() buradan kaldırıldı
         document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
 
