@@ -96,18 +96,34 @@
     <p class="mt-5 text-[10px] font-black tracking-[0.5em] text-blue-400 uppercase">MüdürSMP</p>
 </div>
 
-<!-- Güncellenen ve Otomatik Açılan Duyuru Penceresi -->
+<!-- Geliştirilmiş ve Otomatik Açılan Premium Duyuru Penceresi -->
 <div id="announcementModal" onclick="closeAnnouncement()">
     <div class="relative max-w-md w-full p-4" onclick="event.stopPropagation()">
-        <div class="glass p-8 rounded-[2.5rem] text-center border-t-4 border-red-500 relative shadow-2xl">
-            <button onclick="closeAnnouncement()" class="absolute top-4 right-4 text-slate-400 text-2xl hover:text-white transition">&times;</button>
-            <i class="fa-brands fa-youtube text-red-500 text-6xl mb-4 block animate-pulse"></i>
-            <h4 class="text-2xl font-black italic mb-3 uppercase tracking-tighter text-white">YENİ VİDEO YAYINDA!</h4>
-            <p class="text-slate-300 mb-6 font-medium leading-relaxed text-sm">
-                Pazartesi Mr_mudur Kanalında Youtube Yeni Video Yayında!
+        <div class="glass p-8 rounded-[2.5rem] text-center border-t-4 border-red-500 relative shadow-2xl overflow-hidden shadow-red-500/5">
+            <!-- Arka Plan Neon Işığı -->
+            <div class="absolute -top-20 -left-20 w-40 h-40 bg-red-600 blur-[80px] opacity-30 pointer-events-none"></div>
+            
+            <button onclick="closeAnnouncement()" class="absolute top-5 right-5 text-slate-400 text-2xl hover:text-white transition-colors duration-200">&times;</button>
+            
+            <!-- YouTube Logosu & Efekti -->
+            <div class="relative w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                <i class="fa-brands fa-youtube text-red-500 text-6xl relative z-10 animate-bounce"></i>
+                <div class="absolute inset-0 bg-red-600 blur-2xl opacity-40 rounded-full scale-75 animate-pulse"></div>
+            </div>
+            
+            <!-- Bilgilendirme Rozeti -->
+            <div class="inline-block bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-[10px] font-black mb-4 border border-red-500/20 uppercase tracking-widest">
+                ⏳ GERİ SAYIM BAŞLADI
+            </div>
+            
+            <h4 class="text-3xl font-black italic mb-3 uppercase tracking-tighter text-white">YENİ VİDEO YAKINDA!</h4>
+            
+            <p class="text-slate-300 mb-8 font-medium leading-relaxed text-sm px-2">
+                Pazartesi günü <span class="text-red-400 font-bold">Mr_mudur</span> YouTube kanalında yer yerinden oynayacak! Sürprizlerle dolu yepyeni videoyu kaçırmamak için şimdiden yerini al.
             </p>
-            <a href="https://www.youtube.com/@mudursmp" target="_blank" class="inline-block bg-red-600 hover:bg-white hover:text-red-600 text-white px-8 py-4 rounded-xl font-black uppercase italic transition-all shadow-xl shadow-red-600/20 w-full text-center">
-                <i class="fa-brands fa-youtube mr-2"></i> Youtube Kanalına Git
+            
+            <a href="https://www.youtube.com/@mudursmp" target="_blank" class="inline-block bg-gradient-to-r from-red-600 to-red-700 hover:from-white hover:to-white hover:text-red-600 text-white px-8 py-4 rounded-2xl font-black uppercase italic transition-all duration-300 shadow-xl shadow-red-600/20 w-full text-center tracking-wide hover:-translate-y-0.5">
+                <i class="fa-brands fa-youtube mr-2"></i> Kanala Abone Ol & Bildirimleri Aç
             </a>
         </div>
     </div>
@@ -308,7 +324,7 @@
             loader.style.opacity = '0';
             setTimeout(() => {
                 loader.style.display = 'none';
-                openAnnouncement(); // Siteye giriş yapıldığında yükleme ekranından hemen sonra duyuruyu açar
+                openAnnouncement();
             }, 800);
         }, 800);
     }
@@ -325,7 +341,6 @@
 
     function router() {
         const hash = window.location.hash.replace('#', '') || 'home';
-        // Sayfa içi menü geçişlerinde duyurunun otomatik kapanmasını engellemek için closeAnnouncement() buradan kaldırıldı
         document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
 
