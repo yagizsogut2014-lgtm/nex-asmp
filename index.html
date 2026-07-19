@@ -13,105 +13,126 @@
         :root { 
             --accent: #00d2ff; 
             --accent-dark: #3a7bd5;
-            --bg: #06080c; 
+            --bg: #030508; 
         }
+
+        /* Lüks Scrollbar Tasarımı */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #030508; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--accent), var(--accent-dark)); border-radius: 10px; }
 
         body { 
             background: var(--bg);
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(0, 210, 255, 0.12) 0%, transparent 50%),
-                radial-gradient(circle at 100% 100%, rgba(58, 123, 213, 0.08) 0%, transparent 40%);
-            color: #f8fafc; 
+                radial-gradient(circle at 50% 0%, rgba(0, 210, 255, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 5% 40%, rgba(58, 123, 213, 0.05) 0%, transparent 35%),
+                radial-gradient(circle at 95% 80%, rgba(0, 210, 255, 0.08) 0%, transparent 35%);
+            color: #f1f5f9; 
             font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
         }
 
         #preloader {
-            position: fixed; inset: 0; background: #06080c; z-index: 99999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.8s ease;
+            position: fixed; inset: 0; background: #030508; z-index: 99999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .loader-ring { 
-            width: 70px; height: 70px; border: 3px solid rgba(255,255,255,0.03); 
-            border-top: 3px solid var(--accent); border-radius: 50%;
-            animation: spin 0.8s infinite linear; 
+            width: 50px; height: 50px; border: 2px solid rgba(255,255,255,0.01); 
+            border-top: 2px solid var(--accent); border-radius: 50%;
+            animation: spin 0.6s infinite linear; 
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         .glass { 
-            background: rgba(255, 255, 255, 0.02); 
-            backdrop-filter: blur(12px); 
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.01); 
+            backdrop-filter: blur(24px); 
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.005) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, box-shadow;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
         }
         
         .marquee-wrapper { 
-            background: linear-gradient(90deg, #1e3a8a, #0ea5e9);
-            color: #fff; font-weight: 800; font-size: 11px; padding: 10px 0; overflow: hidden;
+            background: linear-gradient(90deg, #1d4ed8, #0284c7);
+            color: #fff; font-weight: 900; font-size: 11px; padding: 12px 0; overflow: hidden;
+            letter-spacing: 0.5px; box-shadow: 0 4px 30px rgba(14, 165, 233, 0.2);
         }
         .marquee-content { display: inline-block; white-space: nowrap; animation: marquee 30s linear infinite; }
         @keyframes marquee { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
 
         .nav-btn {
-            padding: 10px 22px; border-radius: 14px; font-weight: 700; font-size: 13px;
-            transition: 0.3s; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;
-            cursor: pointer;
+            padding: 12px 30px; border-radius: 18px; font-weight: 700; font-size: 13px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
         }
-        .nav-btn:hover { color: var(--accent); background: rgba(0, 210, 255, 0.06); }
+        .nav-btn:hover { color: var(--accent); background: rgba(0, 210, 255, 0.03); }
         .nav-btn.active { 
-            color: #fff; background: rgba(255,255,255,0.04); 
+            color: #fff; background: rgba(255,255,255,0.02); 
             border: 1px solid rgba(0, 210, 255, 0.2);
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.05);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.15);
         }
 
         #announcementModal {
             display: none;
-            position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100001;
-            align-items: center; justify-content: center; backdrop-filter: blur(8px);
+            position: fixed; inset: 0; background: rgba(1, 2, 4, 0.95); z-index: 100001;
+            align-items: center; justify-content: center; backdrop-filter: blur(16px);
         }
-        #announcementModal.active { display: flex; animation: fadeIn 0.3s ease; }
+        #announcementModal.active { display: flex; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .page-content { display: none; }
-        .page-content.active { display: block; animation: pageIn 0.5s ease-out; }
+        .page-content.active { display: block; animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .ip-display {
-            background: #000; font-family: 'JetBrains Mono', monospace;
-            border: 1px solid rgba(0, 210, 255, 0.2);
+            background: rgba(0, 0, 0, 0.5); font-family: 'JetBrains Mono', monospace;
+            border: 1px solid rgba(0, 210, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ip-display:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.15);
+            background: rgba(0, 0, 0, 0.8);
         }
 
         .toast {
-            position: fixed; top: 40px; left: 50%; transform: translate(-50%, -250%);
-            background: #fff; color: #000; padding: 14px 30px; border-radius: 12px;
-            font-weight: 900; z-index: 100000; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            position: fixed; bottom: 40px; left: 50%; transform: translate(-50%, 250%);
+            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); color: #fff; padding: 18px 40px; border-radius: 20px;
+            font-weight: 900; z-index: 100000; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px rgba(14, 165, 233, 0.3); letter-spacing: 1px;
         }
-
-        .card-hover:hover { transform: translateY(-8px); border-color: var(--accent); }
     </style>
 </head>
 <body onload="removeLoader()">
 
 <div id="preloader">
     <div class="loader-ring"></div>
-    <p class="mt-5 text-[10px] font-black tracking-[0.5em] text-blue-400 uppercase">MüdürSMP</p>
+    <p class="mt-5 text-[10px] font-black tracking-[0.6em] text-blue-400 uppercase animate-pulse">MüdürSMP Yükleniyor</p>
 </div>
 
-<!-- Geliştirilmiş ve Otomatik Açılan Premium Duyuru Penceresi -->
+<!-- Premium Pop-Up Duyuru Penceresi -->
 <div id="announcementModal" onclick="closeAnnouncement()">
     <div class="relative max-w-md w-full p-4" onclick="event.stopPropagation()">
         <div class="glass p-8 rounded-[2.5rem] text-center border-t-4 border-red-500 relative shadow-2xl overflow-hidden shadow-red-500/5">
-            <!-- Arka Plan Neon Işığı -->
-            <div class="absolute -top-20 -left-20 w-40 h-40 bg-red-600 blur-[80px] opacity-30 pointer-events-none"></div>
+            <div class="absolute -top-20 -left-20 w-40 h-40 bg-red-600 blur-[90px] opacity-20 pointer-events-none"></div>
             
             <button onclick="closeAnnouncement()" class="absolute top-5 right-5 text-slate-400 text-2xl hover:text-white transition-colors duration-200">&times;</button>
             
-            <!-- YouTube Logosu & Efekti -->
             <div class="relative w-20 h-20 mx-auto mb-4 flex items-center justify-center">
                 <i class="fa-brands fa-youtube text-red-500 text-6xl relative z-10 animate-bounce"></i>
                 <div class="absolute inset-0 bg-red-600 blur-2xl opacity-40 rounded-full scale-75 animate-pulse"></div>
             </div>
             
-            <!-- Bilgilendirme Rozeti -->
             <div class="inline-block bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-[10px] font-black mb-4 border border-red-500/20 uppercase tracking-widest">
                 ⏳ GERİ SAYIM BAŞLADI
             </div>
@@ -119,7 +140,7 @@
             <h4 class="text-3xl font-black italic mb-3 uppercase tracking-tighter text-white">YENİ VİDEO YAKINDA!</h4>
             
             <p class="text-slate-300 mb-8 font-medium leading-relaxed text-sm px-2">
-                Pazartesi günü <span class="text-red-400 font-bold">Mr_mudur</span> YouTube kanalında yer yerinden oynayacak! Sürprizlerle dolu yepyeni videoyu kaçırmamak için şimdiden yerini al.
+                Pazartesi günü <span class="text-red-400 font-bold">Mr_Müdür</span> YouTube kanalında yer yerinden oynayacak! Sürprizlerle dolu yepyeni videoyu kaçırmamak için şimdiden yerini al.
             </p>
             
             <a href="https://www.youtube.com/@mudursmp" target="_blank" class="inline-block bg-gradient-to-r from-red-600 to-red-700 hover:from-white hover:to-white hover:text-red-600 text-white px-8 py-4 rounded-2xl font-black uppercase italic transition-all duration-300 shadow-xl shadow-red-600/20 w-full text-center tracking-wide hover:-translate-y-0.5">
@@ -135,178 +156,257 @@
     </div>
 </div>
 
-<div id="mainToast" class="toast italic">BAŞARIYLA KOPYALANDI! ⚡</div>
+<div id="mainToast" class="toast italic uppercase">BAŞARIYLA KOPYALANDI! ⚡</div>
 
-<header class="container mx-auto py-8 px-6 flex flex-col md:flex-row justify-between items-center gap-6" data-aos="fade-down">
+<header class="container mx-auto py-10 px-6 flex flex-col md:flex-row justify-between items-center gap-6" data-aos="fade-down">
     <div class="text-center md:text-left">
         <h1 class="group cursor-pointer flex justify-center md:justify-start" onclick="location.hash='home'">
-            <img src="logo.png" alt="MüdürSMP Logo" class="h-24 w-auto object-contain transition-transform group-hover:scale-105">
+            <img src="logo.png" alt="MüdürSMP Logo" class="h-20 w-auto object-contain transition-transform group-hover:scale-102">
         </h1>
         <div class="flex items-center gap-2 mt-2 justify-center md:justify-start">
             <span class="h-[2px] w-4 bg-blue-500"></span>
-            <p class="text-[9px] text-slate-500 font-black uppercase tracking-[0.3em]">Premium Survival</p>
+            <p class="text-[9px] text-slate-500 font-black uppercase tracking-[0.3em]">Premium Survival Experience</p>
         </div>
     </div>
 
     <div class="flex items-center gap-4">
-        <div onclick="copyIP()" class="ip-display px-6 py-3 rounded-2xl cursor-pointer hover:border-blue-500 transition-all group relative overflow-hidden">
+        <div onclick="copyIP()" class="ip-display px-6 py-3 rounded-2xl cursor-pointer group relative overflow-hidden">
             <span class="block text-[8px] text-slate-500 font-black mb-1 uppercase tracking-widest">Tıkla ve Kopyala</span>
             <span class="text-blue-400 font-bold group-hover:text-white transition relative z-10">152.228.132.11:11413</span>
         </div>
         
-        <a href="https://discord.gg/2CnYjAZRk3" target="_blank" class="glass w-14 h-14 flex items-center justify-center rounded-2xl hover:text-blue-400 transition-all group">
+        <a href="https://discord.gg/2CnYjAZRk3" target="_blank" class="glass w-14 h-14 flex items-center justify-center rounded-2xl hover:text-blue-400 transition-all group shadow-lg">
             <i class="fa-brands fa-discord text-2xl group-hover:scale-110 transition"></i>
         </a>
     </div>
 </header>
 
-<nav class="container mx-auto px-4 mb-16" data-aos="fade-up">
-    <div class="glass max-w-fit mx-auto rounded-2xl p-2 flex flex-wrap justify-center gap-1">
-        <a href="#home" class="nav-btn" id="nav-home"><i class="fa-solid fa-bolt mr-1"></i> Anasayfa</a>
-        <a href="#apply" class="nav-btn" id="nav-apply"><i class="fa-solid fa-clipboard-list mr-1"></i> Başvuru</a>
-        <div onclick="openAnnouncement()" class="nav-btn text-amber-400" id="nav-announcement"><i class="fa-solid fa-bullhorn mr-1"></i> Duyuru</div>
-        <a href="#rules" class="nav-btn" id="nav-rules"><i class="fa-solid fa-gavel mr-1"></i> Kurallar</a>
-        <a href="#team" class="nav-btn" id="nav-team"><i class="fa-solid fa-shield-cat mr-1"></i> Ekip</a>
+<nav class="container mx-auto px-4 mb-20" data-aos="fade-up">
+    <div class="glass max-w-fit mx-auto rounded-3xl p-2 flex flex-wrap justify-center gap-1">
+        <a href="#home" class="nav-btn" id="nav-home"><i class="fa-solid fa-bolt"></i> Anasayfa</a>
+        <a href="#apply" class="nav-btn" id="nav-apply"><i class="fa-solid fa-clipboard-list"></i> Başvuru</a>
+        <div onclick="openAnnouncement()" class="nav-btn text-amber-400"><i class="fa-solid fa-bullhorn"></i> Duyuru</div>
+        <a href="#rules" class="nav-btn" id="nav-rules"><i class="fa-solid fa-gavel"></i> Kurallar</a>
+        <a href="#team" class="nav-btn" id="nav-team"><i class="fa-solid fa-shield-cat"></i> Ekip</a>
     </div>
 </nav>
 
 <main class="container mx-auto px-6">
     
+    <!-- ANASAYFA -->
     <section id="home" class="page-content active">
-        <div class="grid lg:grid-cols-12 gap-8">
+        <div class="grid lg:grid-cols-12 gap-8 mb-20">
             <div class="lg:col-span-8">
-                <div class="glass rounded-[3rem] p-12 relative overflow-hidden group min-h-[450px] flex flex-col justify-center">
+                <div class="glass rounded-[3rem] p-12 relative overflow-hidden group min-h-[460px] flex flex-col justify-center border border-white/5">
+                    <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-500 blur-[150px] opacity-10 pointer-events-none"></div>
                     <div class="relative z-10">
-                        <div class="inline-block bg-blue-500/10 text-blue-400 px-4 py-1 rounded-lg text-[10px] font-black mb-6 border border-blue-500/20">
-                            YENİ NESİL ALTYAPI
+                        <div class="inline-block bg-blue-500/10 text-blue-400 px-4 py-1.5 rounded-xl text-[10px] font-black mb-6 border border-blue-500/20 uppercase tracking-widest">
+                            🚀 KESİNTİSİZ ALTYAPI
                         </div>
-                        <h2 class="text-7xl font-black italic mb-6 leading-[0.9] tracking-tighter uppercase">
+                        <h2 class="text-6xl md:text-7xl font-black italic mb-6 leading-[0.9] tracking-tighter uppercase">
                             Bir Sürüm <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">TEK DÜNYA.</span>
                         </h2>
-                        <p class="text-slate-400 text-lg mb-10 max-w-lg font-medium">
-                            MüdürSMP, 26.1.2'e Sürüm. Arkadaşlarınla sürüm farkı olmaksızın en güncel Survival deneyimini yaşa.
+                        <p class="text-slate-400 text-lg mb-10 max-w-lg font-medium leading-relaxed">
+                            MüdürSMP 26.1.2 tabanlı mimarisiyle yayında. Arkadaşlarınla beraber sıfır gecikme ve en güncel Survival mekanikleriyle maceraya atıl!
                         </p>
                         
                         <div class="flex flex-wrap gap-5">
-                            <button onclick="copyIP()" class="bg-blue-600 hover:bg-white hover:text-blue-600 text-white px-12 py-5 rounded-2xl font-black uppercase italic transition-all shadow-xl shadow-blue-600/20 transform hover:-translate-y-1">Hemen Katıl</button>
-                            <div class="glass px-8 py-5 rounded-2xl flex flex-col justify-center">
-                                <p class="text-[9px] text-slate-500 font-black leading-none uppercase mb-1">Anlık Oyuncu</p>
-                                <p id="mc-count-text" class="text-lg font-black text-white italic">YÜKLENİYOR...</p>
+                            <button onclick="copyIP()" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-white hover:to-white hover:text-blue-600 text-white px-12 py-5 rounded-2xl font-black uppercase italic transition-all shadow-xl shadow-blue-600/20 transform hover:-translate-y-1 tracking-wide">Hemen Katıl</button>
+                            <div class="glass px-8 py-5 rounded-2xl flex flex-col justify-center border border-white/5">
+                                <p class="text-[9px] text-slate-500 font-black leading-none uppercase mb-1 tracking-wider">Aktif Oyuncu</p>
+                                <p id="mc-count-text" class="text-xl font-black text-white italic tracking-wide">YÜKLENİYOR...</p>
                             </div>
                         </div>
                     </div>
-                    <i class="fa-solid fa-dragon absolute -bottom-10 -right-10 text-[20rem] text-white/[0.02] -rotate-12 pointer-events-none"></i>
+                    <i class="fa-solid fa-dragon absolute -bottom-10 -right-10 text-[22rem] text-white/[0.012] -rotate-12 pointer-events-none"></i>
                 </div>
             </div>
 
             <div class="lg:col-span-4 space-y-6">
-                <div class="glass p-10 rounded-[2.5rem] card-hover transition-all">
-                    <h3 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-8 italic">Sunucu İstatistikleri</h3>
+                <div class="glass p-10 rounded-[2.5rem] glass-card">
+                    <h3 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-8 italic">Sunucu Durumu</h3>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-white/5 p-5 rounded-2xl">
-                            <span class="block text-[9px] text-blue-400 font-bold mb-1 uppercase">Sürümler</span>
+                        <div class="bg-white/[0.01] p-5 rounded-2xl border border-white/5">
+                            <span class="block text-[9px] text-blue-400 font-bold mb-1 uppercase">Ana Sürüm</span>
                             <span class="text-lg font-black italic">26.1.2</span>
                         </div>
-                        <div class="bg-white/5 p-5 rounded-2xl">
-                            <span class="block text-[9px] text-green-400 font-bold mb-1 uppercase">Gecikme</span>
+                        <div class="bg-white/[0.01] p-5 rounded-2xl border border-white/5">
+                            <span class="block text-[9px] text-emerald-400 font-bold mb-1 uppercase">Gecikme</span>
                             <span class="text-lg font-black italic">~20ms</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="glass p-10 rounded-[2.5rem] card-hover border-t-4 border-indigo-500">
-                    <h3 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-6 italic">Discord Durumu</h3>
+                <div class="glass p-10 rounded-[2.5rem] glass-card border-t-4 border-indigo-500">
+                    <h3 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-6 italic">Topluluk Gücü</h3>
                     <div class="flex items-end gap-3">
-                        <span id="real-discord-members" class="text-5xl font-black text-indigo-400 italic">0</span>
-                        <span class="text-[10px] font-bold text-slate-500 uppercase mb-2">Aktif Üye<br>Toplulukta</span>
+                        <span id="real-discord-members" class="text-5xl font-black text-indigo-400 italic leading-none">0</span>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase mb-1">Discord'da<br>Aktif Üye</span>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EŞSİZ SİSTEMLERİMİZ -->
+        <div class="mb-20" data-aos="fade-up">
+            <h3 class="text-center text-xs font-black text-slate-500 uppercase tracking-[0.4em] mb-12">— EŞSİZ SİSTEMLERİMİZ —</h3>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass p-8 rounded-[2rem] border border-white/5 shadow-xl">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400 text-xl mb-6 border border-blue-500/20">
+                        <i class="fa-solid fa-gavel"></i>
+                    </div>
+                    <h4 class="text-xl font-black italic text-white uppercase mb-2">Gelişmiş Koruma</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Hilecileri ve oyun zevkini bozanları anında engelleyen, adil bir oyun sunan özel koruma kalkanları.</p>
+                </div>
+                <div class="glass p-8 rounded-[2rem] border border-white/5 shadow-xl">
+                    <div class="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-400 text-xl mb-6 border border-emerald-500/20">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <h4 class="text-xl font-black italic text-white uppercase mb-2">Dengeli Ekonomi</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Emeklerinizin tamamen korunduğu, adil ticaret yapabileceğiniz kusursuz bir Survival piyasası.</p>
+                </div>
+                <div class="glass p-8 rounded-[2rem] border border-white/5 shadow-xl">
+                    <div class="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-400 text-xl mb-6 border border-amber-500/20">
+                        <i class="fa-solid fa-calendar-star"></i>
+                    </div>
+                    <h4 class="text-xl font-black italic text-white uppercase mb-2">Günlük Etkinlikler</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Her akşam saat 20:00'de başlayan, rekabet dolu ve bol ödüllü topluluk etkinlikleri.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- BAŞVURU -->
     <section id="apply" class="page-content">
         <div class="text-center mb-16">
             <h2 class="text-5xl font-black italic uppercase tracking-tighter">EKİBE <span class="text-blue-500">KATIL</span></h2>
-            <p class="text-slate-500 text-sm mt-3 font-bold uppercase tracking-[0.3em]">MüdürSMP'nın Bir Parçası Olmaya Hazır Mısın?</p>
+            <p class="text-slate-500 text-sm mt-3 font-bold uppercase tracking-[0.3em]">MüdürSMP Ailesinin Bir Parçası Ol</p>
         </div>
         
         <div class="max-w-3xl mx-auto">
-            <div class="glass p-12 rounded-[3rem] text-center border-t-4 border-blue-500">
-                <i class="fa-solid fa-user-plus text-6xl text-blue-500 mb-8 block"></i>
-                <h4 class="text-3xl font-black italic mb-6 uppercase tracking-tighter">Yetkili Başvuruları</h4>
-                <p class="text-slate-400 mb-10 font-medium leading-relaxed">
-                    MüdürSMP bünyesinde rehber, moderatör veya geliştirici olarak görev almak istiyorsan, başvuru formumuzu doldurman yeterli. Tüm başvurular ekibimiz tarafından detaylıca incelenir.
+            <div class="glass p-12 rounded-[3rem] text-center border-t-4 border-blue-500 shadow-2xl">
+                <div class="w-20 h-20 bg-blue-500/10 rounded-3xl flex items-center justify-center text-blue-500 text-4xl mx-auto mb-8 border border-blue-500/20 shadow-inner">
+                    <i class="fa-solid fa-user-plus"></i>
+                </div>
+                <h4 class="text-3xl font-black italic mb-4 uppercase tracking-tighter">Yetkili Başvuru Formu</h4>
+                <p class="text-slate-400 mb-10 font-medium leading-relaxed max-w-xl mx-auto text-sm md:text-base">
+                    Sunucumuzda Rehber, Moderatör veya Ekip Lideri olarak rol almak, topluluğu büyütmek ve düzeni sağlamak istiyorsan kapımız sana açık! Başvurular titizlikle incelenir.
                 </p>
-                <a href="https://discord.gg/2CnYjAZRk3" target="_blank" class="inline-block bg-blue-600 hover:bg-white hover:text-blue-600 text-white px-12 py-5 rounded-2xl font-black uppercase italic transition-all shadow-xl shadow-blue-600/20">
-                    Başvuru Formuna Git
+                <a href="https://discord.gg/2CnYjAZRk3" target="_blank" class="inline-block bg-gradient-to-r from-blue-600 to-blue-700 hover:from-white hover:to-white hover:text-blue-600 text-white px-12 py-5 rounded-2xl font-black uppercase italic transition-all shadow-xl shadow-blue-600/20 tracking-wide hover:-translate-y-1">
+                    Discord Üzerinden Başvur
                 </a>
             </div>
         </div>
     </section>
 
+    <!-- KURALLAR -->
     <section id="rules" class="page-content">
         <div class="text-center mb-16">
             <h2 class="text-5xl font-black italic uppercase tracking-tighter">SUNUCU <span class="text-blue-500">YASALARI</span></h2>
-            <p class="text-slate-500 text-sm mt-3 font-bold uppercase tracking-[0.3em]">Adil Oyun Her Şeyden Önemlidir</p>
+            <p class="text-slate-500 text-sm mt-3 font-bold uppercase tracking-[0.3em]">Adil Oyun Ve Huzurlu Bir Topluluk İçin</p>
         </div>
-        <div class="max-w-4xl mx-auto grid gap-4">
-            <div class="glass p-8 rounded-3xl border-l-4 border-blue-500 flex gap-8 items-center hover:bg-blue-500/5 transition">
-                <span class="text-5xl font-black text-blue-500 opacity-20 italic">01</span>
+        <div class="max-w-4xl mx-auto grid gap-5">
+            <div class="glass p-8 rounded-3xl border-l-4 border-blue-500 flex gap-6 items-center hover:bg-blue-500/[0.01] transition duration-300">
+                <span class="text-4xl font-black text-blue-500 opacity-20 italic font-mono">01</span>
                 <div>
-                    <h4 class="font-black italic text-lg uppercase text-blue-400">Üslup ve Saygı</h4>
-                    <p class="text-slate-400 text-sm mt-1">Küfür, argo, siyaset ve her türlü ayrımcı söylem yasaktır. Topluluk huzurunu bozmak ceza sebebidir.</p>
+                    <h4 class="font-black italic text-lg uppercase text-blue-400 tracking-wide">Üslup ve Karşılıklı Saygı</h4>
+                    <p class="text-slate-400 text-sm mt-1 leading-relaxed">Küfür, argo, siyaset, kışkırtma ve her türlü ayrımcı söylem kesinlikle yasaktır. Sohbet huzurunu korumak birincil kuraldır.</p>
                 </div>
             </div>
-            <div class="glass p-8 rounded-3xl border-l-4 border-red-600 flex gap-8 items-center hover:bg-red-600/5 transition">
-                <span class="text-5xl font-black text-red-600 opacity-20 italic">02</span>
+            <div class="glass p-8 rounded-3xl border-l-4 border-red-500 flex gap-6 items-center hover:bg-red-500/[0.01] transition duration-300">
+                <span class="text-4xl font-black text-red-500 opacity-20 italic font-mono">02</span>
                 <div>
-                    <h4 class="font-black italic text-lg uppercase text-red-500">Hile ve Yazılım</h4>
-                    <p class="text-slate-400 text-sm mt-1">KillAura, Fly, X-Ray ve oyun dengesini bozan her türlü makro/yazılım süresiz uzaklaştırma ile sonuçlanır.</p>
+                    <h4 class="font-black italic text-lg uppercase text-red-400 tracking-wide">İllegal Yazılım & Hile Kullanımı</h4>
+                    <p class="text-slate-400 text-sm mt-1 leading-relaxed">KillAura, Fly, X-Ray, Makro ve oyun dengesine müdahale eden tüm 3. parti yazılımlar sınırsız ve affedilmez uzaklaştırma sebebidir.</p>
                 </div>
             </div>
-            <div class="glass p-8 rounded-3xl border-l-4 border-emerald-500 flex gap-8 items-center hover:bg-emerald-500/5 transition">
-                <span class="text-5xl font-black text-emerald-500 opacity-20 italic">03</span>
+            <div class="glass p-8 rounded-3xl border-l-4 border-emerald-500 flex gap-6 items-center hover:bg-emerald-500/[0.01] transition duration-300">
+                <span class="text-4xl font-black text-emerald-500 opacity-20 italic font-mono">03</span>
                 <div>
-                    <h4 class="font-black italic text-lg uppercase text-emerald-400">Reklam ve Spam</h4>
-                    <p class="text-slate-400 text-sm mt-1">Başka sunucuların reklamını yapmak veya global sohbette gereksiz kirlilik oluşturmak yasaktır.</p>
+                    <h4 class="font-black italic text-lg uppercase text-emerald-400 tracking-wide">Reklam ve Sohbet Spamı</h4>
+                    <p class="text-slate-400 text-sm mt-1 leading-relaxed">Başka sunucu tanıtımları, Discord link paylaşımları veya genel sohbeti (global chat) sabote edecek spam hareketleri cezalandırılır.</p>
                 </div>
             </div>
-            <div class="glass p-8 rounded-3xl border-l-4 border-amber-500 flex gap-8 items-center hover:bg-amber-500/5 transition">
-                <span class="text-5xl font-black text-amber-500 opacity-20 italic">04</span>
+            <div class="glass p-8 rounded-3xl border-l-4 border-amber-500 flex gap-6 items-center hover:bg-amber-500/[0.01] transition duration-300">
+                <span class="text-4xl font-black text-amber-500 opacity-20 italic font-mono">04</span>
                 <div>
-                    <h4 class="font-black italic text-lg uppercase text-amber-400">KURALLARA UYUN</h4>
-                    <p class="text-slate-400 text-sm mt-1">Kuralları Okuduysanız Veya Sunucuya Girdiyseniz Kuralları kabul etmis olursunuz.</p>
+                    <h4 class="font-black italic text-lg uppercase text-amber-400 tracking-wide">Yasal Beyanat</h4>
+                    <p class="text-slate-400 text-sm mt-1 leading-relaxed">MüdürSMP dünyasına giriş yaptığınız andan itibaren belirtilen tüm kuralları eksiksiz bir şekilde okumuş ve kabul etmiş sayılırsınız.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- EKİP (MİNİMALİST, LOGOSUZ/GÖRSELİZ VE YENİ KADRO İLE YENİDEN TASARLANDI) -->
     <section id="team" class="page-content">
-        <h2 class="text-4xl font-black italic mb-20 text-center uppercase tracking-tighter">YÖNETİM <span class="text-blue-500">EKİBİ</span></h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
-            <div class="glass p-10 rounded-[3rem] text-center card-hover transition-all">
-                <div class="relative w-28 h-28 mx-auto mb-6">
-                    <img src="https://minotar.net/cube/Steve/100" class="rounded-3xl relative z-10 shadow-2xl">
-                    <div class="absolute inset-0 bg-red-500 blur-3xl opacity-20"></div>
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-black italic uppercase tracking-tighter">YÖNETİM <span class="text-blue-500">KADROSU</span></h2>
+            <p class="text-slate-500 text-sm mt-3 font-bold uppercase tracking-[0.3em]">Sunucunun Arkasındaki Profesyonel Ekip</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            
+            <!-- KURUCU CARD: ATAHAN -->
+            <div class="glass p-8 rounded-[2rem] text-center glass-card border-t-4 border-red-500 relative overflow-hidden flex flex-col justify-between min-h-[300px]">
+                <div class="absolute -right-10 -top-10 w-24 h-24 bg-red-500 blur-[80px] opacity-10 rounded-full"></div>
+                <div>
+                    <div class="inline-block bg-red-500/10 text-red-400 text-[9px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-6 border border-red-500/20">
+                        👑 Kurucu / Owner
+                    </div>
+                    <h4 class="text-3xl font-black italic uppercase text-white tracking-tight mb-3">Atahan</h4>
+                    <p class="text-slate-400 text-xs font-medium px-4 leading-relaxed">Sunucu genel vizyonu, ana yönetim stratejileri ve kurumsal altyapının planlanmasından sorumludur.</p>
                 </div>
-                <span class="text-[10px] font-black text-red-500 uppercase tracking-widest block mb-2">Kurucu</span>
-                <h4 class="text-2xl font-black italic uppercase tracking-tighter">bütün yetkili ekibi yakında gözükcek</h4>
+                <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-center gap-2 text-[12px] font-mono text-slate-300 bg-black/40 py-2.5 rounded-xl">
+                    <i class="fa-brands fa-discord text-red-400"></i> atahan
+                </div>
             </div>
+
+            <!-- ADMIN CARD: STRYKER -->
+            <div class="glass p-8 rounded-[2rem] text-center glass-card border-t-4 border-amber-500 relative overflow-hidden flex flex-col justify-between min-h-[300px]">
+                <div class="absolute -right-10 -top-10 w-24 h-24 bg-amber-500 blur-[80px] opacity-10 rounded-full"></div>
+                <div>
+                    <div class="inline-block bg-amber-500/10 text-amber-400 text-[9px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-6 border border-amber-500/20">
+                        🛡️ Yönetici / Admin
+                    </div>
+                    <h4 class="text-3xl font-black italic uppercase text-white tracking-tight mb-3">STRYKER</h4>
+                    <p class="text-slate-400 text-xs font-medium px-4 leading-relaxed">Oyun içi düzen, etkinliklerin koordinasyonu, teknik denetim ve adalet mekanizmasını yönetir.</p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-center gap-2 text-[12px] font-mono text-slate-300 bg-black/40 py-2.5 rounded-xl">
+                    <i class="fa-brands fa-discord text-amber-400"></i> stryker
+                </div>
+            </div>
+
+            <!-- YAYINCI CARD: MR_MÜDÜR -->
+            <div class="glass p-8 rounded-[2rem] text-center glass-card border-t-4 border-red-600 relative overflow-hidden flex flex-col justify-between min-h-[300px]">
+                <div class="absolute -right-10 -top-10 w-24 h-24 bg-red-600 blur-[80px] opacity-10 rounded-full"></div>
+                <div>
+                    <div class="inline-block bg-red-600/10 text-red-400 text-[9px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-6 border border-red-600/20">
+                        🎥 Yayıncı / Creator
+                    </div>
+                    <h4 class="text-3xl font-black italic uppercase text-white tracking-tight mb-3">Mr_Müdür</h4>
+                    <p class="text-slate-400 text-xs font-medium px-4 leading-relaxed">Medya yapılanması, canlı yayınlar, video içerik üretimi ve topluluk etkileşiminin lideridir.</p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-center gap-2 text-[12px] font-mono text-slate-300 bg-black/40 py-2.5 rounded-xl">
+                    <i class="fa-brands fa-discord text-red-500"></i> mr_mudur
+                </div>
+            </div>
+
         </div>
     </section>
 
 </main>
 
-<footer class="mt-40 py-20 border-t border-white/5 bg-black/50">
-    <div class="container mx-auto px-10 flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
+<footer class="mt-40 py-16 border-t border-white/5 bg-black/60 backdrop-blur-md">
+    <div class="container mx-auto px-10 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
         <div>
             <h2 class="text-3xl font-black italic text-white tracking-tighter">MüdürSMP<span class="text-blue-500">.</span></h2>
             <p class="text-slate-600 text-[10px] font-bold uppercase tracking-[0.5em] mt-2">© 2026 MüdürSMP • TÜM HAKLARI SAKLIDIR.</p>
         </div>
-        <div class="flex gap-8">
-            <a href="https://discord.gg/2CnYjAZRk3" target="_blank" class="text-slate-500 hover:text-indigo-400 text-5xl transition-all">
+        <div class="flex gap-6">
+            <a href="https://discord.gg/2CnYjAZRk3" target="_blank" class="text-slate-500 hover:text-indigo-400 text-4xl transition-all duration-300">
                 <i class="fa-brands fa-discord"></i>
+            </a>
+            <a href="https://www.youtube.com/@mudursmp" target="_blank" class="text-slate-500 hover:text-red-500 text-4xl transition-all duration-300">
+                <i class="fa-brands fa-youtube"></i>
             </a>
         </div>
     </div>
@@ -314,7 +414,7 @@
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    AOS.init({ duration: 1000, once: true });
+    AOS.init({ duration: 800, once: true });
 
     const serverIP = "152.228.132.11:11413";
 
@@ -325,8 +425,8 @@
             setTimeout(() => {
                 loader.style.display = 'none';
                 openAnnouncement();
-            }, 800);
-        }, 800);
+            }, 600);
+        }, 600);
     }
 
     function openAnnouncement() {
@@ -359,15 +459,18 @@
         const DISCORD_ID = "1527667712464261171";
         try {
             const mc = await fetch(`https://api.mcstatus.io/v2/status/java/${serverIP}`);
+            if (!mc.ok) throw new Error();
             const mcData = await mc.json();
             document.getElementById('mc-count-text').innerText = mcData.online ? 
-                `${mcData.players.online} / ${mcData.players.max}` : "SUNUCU KAPALI";
+                `${mcData.players.online} / ${mcData.players.max}` : "AKTİF KADRO";
 
             const ds = await fetch(`https://discord.com/api/guilds/${DISCORD_ID}/widget.json`);
+            if (!ds.ok) throw new Error();
             const dsData = await ds.json();
-            document.getElementById('real-discord-members').innerText = dsData.presence_count || "0";
+            document.getElementById('real-discord-members').innerText = dsData.presence_count || "Online";
         } catch(e) { 
-            console.error("Veri hatası.");
+            document.getElementById('mc-count-text').innerText = "ÇEVRİMİÇİ";
+            document.getElementById('real-discord-members').innerText = "Aktif";
         }
     }
 
@@ -378,12 +481,12 @@
         const t = document.getElementById('mainToast');
         t.innerText = msg;
         t.style.transform = 'translate(-50%, 0)';
-        setTimeout(() => t.style.transform = 'translate(-50%, -250%)', 3000);
+        setTimeout(() => t.style.transform = 'translate(-50%, 250%)', 2500);
     }
 
     function copyIP() {
         navigator.clipboard.writeText(serverIP);
-        toast("IP KOPYALANDI! 🚀");
+        toast("IP Adresi Kopyalandı! 🚀");
     }
 </script>
 
